@@ -1,13 +1,22 @@
-import os
+# Libairies
 
-clock = 0, 0, 0
+import os
+import time
+
+# Variables
+
+clock = (0, 0, 0)
 
 hour_list = [str(i) for i in range(24)]
-
 minute_second_list = [str(i) for i in range(60)]
 
+# Functions
+
 def clear():
-    os.system("clear")
+    if os.name == "posix":
+        os.system("clear")
+    else:
+        os.system("cls")
 
 def menu():
 
@@ -51,4 +60,6 @@ def display_clock():
 
 clock = set_clock()
 
-display_clock()
+while 1:
+    display_clock()
+    time.sleep(1)
