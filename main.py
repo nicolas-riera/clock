@@ -41,6 +41,14 @@ def set_clock():
     else:
         set_clock()
 
+def display_clock():
+
+    clear()
+
+    print(f"{clock[0]}:{clock[1]}:{clock[2]}")
+
 # Main program
 
 clock = set_clock()
+
+display_clock()
