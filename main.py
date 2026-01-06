@@ -26,9 +26,10 @@ def menu(clock, interval):
     usr_input = input("Choose an option : ")
     
     if usr_input == "1":
-        old_interval = interval
-        interval = display_clock(clock, interval)
-        clock = increment_clock(clock, interval - old_interval)
+        clear()
+        new_interval = display_clock(clock, interval)
+        clock = increment_clock(clock, int(new_interval - interval))
+        interval = new_interval
 
     elif usr_input == "2":
         clock = set_clock()

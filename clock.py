@@ -36,17 +36,24 @@ def increment_clock(clock, increment):
 def display_clock(clock:tuple, interval):
 
     try :
+
+        start_monotonic = interval 
+        base_clock = clock
+
+        print("\033[?25l", end="", flush=True)
+
         while True:
             
             now = time.monotonic()
-            clock = increment_clock(clock, now - interval)
-            interval = now
+            elapsed = int(now - start_monotonic) 
+            current_clock = increment_clock(base_clock, elapsed)
 
-            clear()
-            print(f"{clock[0]:02}:{clock[1]:02}:{clock[2]:02}")
-            print("\n(Press Ctrl + C to open the menu)")
-            time.sleep(1)
+            print(f"\033[1;1H{current_clock[0]:02}:{current_clock[1]:02}:{current_clock[2]:02}", end="", flush=True)
+            print("\n\n(Press Ctrl + C to open the menu)")
+            time.sleep(0.2)
     
     except KeyboardInterrupt:
         
-        return interval
+        print("\033[?25h", end="", flush=True)
+
+        return now
