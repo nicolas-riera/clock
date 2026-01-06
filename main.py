@@ -29,11 +29,14 @@ def menu(clock, interval):
         old_interval = interval
         interval = display_clock(clock, interval)
         clock = increment_clock(clock, interval - old_interval)
+
     elif usr_input == "2":
         clock = set_clock()
         interval = time.monotonic()
+
     elif usr_input == "3":
         pass # à faire
+    
     elif usr_input == "0":
         return False, clock, interval
     
