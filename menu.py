@@ -28,7 +28,7 @@ def menu(clock, interval):
     if usr_input == "1":
         clear()
         new_interval = display_clock(clock, interval, display_format_24)
-        clock = increment_clock(clock, int(new_interval - interval))
+        clock = increment_clock(clock, new_interval - interval)
         interval = new_interval
 
     elif usr_input == "2":
