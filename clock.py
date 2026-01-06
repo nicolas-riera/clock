@@ -1,6 +1,6 @@
 # Librairies
 
-from main import clear
+from clear import clear
 import time
 import datetime
 
