@@ -22,26 +22,31 @@ def set_clock()->tuple:
     if usr_time_hour in hour_list and usr_time_minutes in minute_second_list and usr_time_seconds in minute_second_list:
         return int(usr_time_hour), int(usr_time_minutes), int(usr_time_seconds)
     else:
-        set_clock()
+        return set_clock()
 
 def increment_clock(clock, increment):
 
     clock_incremented = datetime.timedelta(hours=clock[0], 
                         minutes=clock[1], seconds=clock[2]) + datetime.timedelta(seconds=increment)
-    return (clock_incremented.seconds // 3600, (clock_incremented.seconds % 3600) // 60, clock_incremented.seconds % 60)
+    
+    total_seconds = int(clock_incremented.total_seconds()) % 86400
+
+    return (total_seconds // 3600, (total_seconds  % 3600) // 60, total_seconds % 60)
 
 def display_clock(clock:tuple, interval):
 
     try :
-        while 1:
+        while True:
+            
+            now = time.monotonic()
+            clock = increment_clock(clock, now - interval)
+            interval = now
+
             clear()
-            clock = increment_clock(clock, time.monotonic() - interval)
-            interval = time.monotonic()
-            print(f"{clock[0]}:{clock[1]}:{clock[2]}")
-            print("\n(Press Ctrl + C to exit)")
+            print(f"{clock[0]:02}:{clock[1]:02}:{clock[2]:02}")
+            print("\n(Press Ctrl + C to open the menu)")
             time.sleep(1)
-
-        return interval
+    
     except KeyboardInterrupt:
-
+        
         return interval

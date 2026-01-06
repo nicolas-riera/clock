@@ -24,20 +24,20 @@ def menu(clock, interval):
     print("0. Quit")
 
     usr_input = input("Choose an option : ")
-
-    clock = increment_clock(clock, time.monotonic() - interval)
-    interval = time.monotonic()
     
     if usr_input == "1":
+        old_interval = interval
         interval = display_clock(clock, interval)
+        clock = increment_clock(clock, interval - old_interval)
     elif usr_input == "2":
-        set_clock()
+        clock = set_clock()
+        interval = time.monotonic()
     elif usr_input == "3":
         pass # à faire
     elif usr_input == "0":
-        return False
+        return False, clock, interval
     
-    return True
+    return True, clock, interval
 
 # Main program
 
@@ -48,4 +48,4 @@ if __name__ == "__main__":
     interval = time.monotonic()
     running = True
     while running:
-        running = menu(clock, interval)
+        running, clock, interval = menu(clock, interval)
