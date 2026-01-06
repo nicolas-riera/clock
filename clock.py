@@ -45,7 +45,7 @@ def display_clock(clock:tuple, interval):
         while True:
             
             now = time.monotonic()
-            elapsed = int(now - start_monotonic) 
+            elapsed = now - start_monotonic
             current_clock = increment_clock(base_clock, elapsed)
 
             print(f"\033[1;1H{current_clock[0]:02}:{current_clock[1]:02}:{current_clock[2]:02}", end="", flush=True)
