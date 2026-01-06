@@ -39,6 +39,7 @@ def menu(clock, interval):
         pass # à faire
     
     elif usr_input == "0":
+        clear()
         return False, clock, interval
     
     return True, clock, interval
