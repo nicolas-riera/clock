@@ -8,6 +8,8 @@ import time
 
 display_format_24 = True
 
+# Functions
+
 def menu(clock, interval):
 
     global display_format_24

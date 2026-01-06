@@ -8,7 +8,6 @@ from menu import menu
 # Variables
 
 running = True
-display_format_24 = True
 
 # Main program
 

@@ -1,4 +1,8 @@
-import os 
+# Librairies
+
+import os
+
+# Functions
 
 def clear():
     if os.name == "posix":
