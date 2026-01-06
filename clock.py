@@ -57,7 +57,10 @@ def display_clock(clock:tuple, interval, display_format_24):
                     print(f"\033[1;1H{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} AM", end="", flush=True)
 
             print("\n\n(Press Ctrl + C to open the menu)")
-            time.sleep(0.2)
+            
+            now = time.monotonic()
+            sleep_time = 1 - (now % 1)
+            time.sleep(sleep_time)
     
     except KeyboardInterrupt:
         
