@@ -33,7 +33,7 @@ def increment_clock(clock, increment):
 
     return (total_seconds // 3600, (total_seconds  % 3600) // 60, total_seconds % 60)
 
-def display_clock(clock:tuple, interval):
+def display_clock(clock:tuple, interval, display_format_24):
 
     try :
 
@@ -48,7 +48,14 @@ def display_clock(clock:tuple, interval):
             elapsed = now - start_monotonic
             current_clock = increment_clock(base_clock, elapsed)
 
-            print(f"\033[1;1H{current_clock[0]:02}:{current_clock[1]:02}:{current_clock[2]:02}", end="", flush=True)
+            if display_format_24:
+                print(f"\033[1;1H{current_clock[0]:02}:{current_clock[1]:02}:{current_clock[2]:02}", end="", flush=True)
+            else:
+                if current_clock[0] >= 13:
+                    print(f"\033[1;1H{current_clock[0]-12:02}:{current_clock[1]:02}:{current_clock[2]:02} PM", end="", flush=True)
+                else:
+                    print(f"\033[1;1H{current_clock[0]:02}:{current_clock[1]:02}:{current_clock[2]:02} AM", end="", flush=True)
+
             print("\n\n(Press Ctrl + C to open the menu)")
             time.sleep(0.2)
     
