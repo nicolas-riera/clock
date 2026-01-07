@@ -16,6 +16,7 @@ alarm = -1, -1, -1
 def menu(clock, interval):
 
     global display_format_24
+    global alarm
 
     clear()
 
@@ -30,7 +31,7 @@ def menu(clock, interval):
     
     if usr_input == "1":
         clear()
-        new_interval = display_clock(clock, interval, display_format_24)
+        new_interval, alarm = display_clock(clock, interval, display_format_24, alarm)
         clock = increment_clock(clock, new_interval - interval)
         interval = new_interval
 
@@ -41,7 +42,7 @@ def menu(clock, interval):
     elif usr_input == "3":
         clear()
 
-        if check_alarm(clock, alarm):
+        if not(check_alarm((-1, -1, -1), alarm)):
 
             if display_format_24:
                 alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02}"

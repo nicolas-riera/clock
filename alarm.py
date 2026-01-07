@@ -27,7 +27,7 @@ def set_alarm():
 
 def check_alarm(clock, alarm):
     count = 3
-    for i in range(2):
+    for i in range(3):
         if clock[i] == alarm[i]:
             count -= 1
     if count == 0:
