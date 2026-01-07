@@ -4,6 +4,7 @@ from clear import clear
 from error import error_messages
 from clock import *
 from alarm import *
+from pause import *
 import time
 
 # Variables
@@ -13,7 +14,7 @@ alarm = -1, -1, -1
 
 # Functions
 
-def menu(clock, interval):
+def menu(clock, interval, pause_offset):
 
     global display_format_24
     global alarm
@@ -24,80 +25,85 @@ def menu(clock, interval):
     print("2. Update time")
     print("3. Set alarm")
     print("4. Set 24h/12h mode")
+    print("5. Pause clock")
     
     print("0. Quit")
 
     usr_input = input("Choose an option : ")
     
-    if usr_input == "1":
-        clear()
-        new_interval, alarm = display_clock(clock, interval, display_format_24, alarm)
-        clock = increment_clock(clock, new_interval - interval)
-        interval = new_interval
+    match usr_input:
+        
+        case "1":
+            clear()
+            clock, interval, alarm = display_clock(clock, interval, display_format_24, alarm, pause_offset)
+            pause_offset = 0.0
 
-    elif usr_input == "2":
-        clock = set_clock()
-        interval = time.monotonic()
+        case "2":
+            clock, pause_offset = set_clock()
+            interval = time.monotonic()
 
-    elif usr_input == "3":
-        clear()
+        case "3":
+            clear()
 
-        if not(check_alarm((-1, -1, -1), alarm)):
+            if not(check_alarm((-1, -1, -1), alarm)):
 
-            if display_format_24:
-                alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02}"
-            else:
-                if alarm[0] >= 13:
-                    alarm_text = f"{int(alarm[0])-12:02}:{int(alarm[1]):02}:{int(alarm[2]):02} PM"
+                if display_format_24:
+                    alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02}"
                 else:
-                    alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02} AM"
+                    if alarm[0] >= 13:
+                        alarm_text = f"{int(alarm[0])-12:02}:{int(alarm[1]):02}:{int(alarm[2]):02} PM"
+                    else:
+                        alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02} AM"
 
-            clear()
-
-            print("1. Disable Alarm")
-            print("0. Exit")
-            
-            print(f"An alarm is set : {alarm_text}")
-
-            usr_alarm_input = input("Choose an option : ")
-
-            if usr_alarm_input == "1":
-                alarm = -1, -1, -1
                 clear()
-                print("Successfully disabled the alarm.")
-                time.sleep(0.2)
-                input("Press Enter to continue.")
+
+                print("1. Disable Alarm")
+                print("0. Exit")
                 
-            elif usr_alarm_input == "0":
-                pass
+                print(f"An alarm is set : {alarm_text}")
+
+                usr_alarm_input = input("Choose an option : ")
+
+                if usr_alarm_input == "1":
+                    alarm = -1, -1, -1
+                    clear()
+                    print("Successfully disabled the alarm.")
+                    time.sleep(0.2)
+                    input("Press Enter to continue.")
+                    
+                elif usr_alarm_input == "0":
+                    pass
+                else:
+                    error_messages()
             else:
-                error_messages()
-        else:
-            alarm = set_alarm()
+                alarm = set_alarm()
 
-    elif usr_input == "4":
+        case "4":
 
-        usr_input_mode = "-1"
+            usr_input_mode = "-1"
 
-        while usr_input_mode != "1" and usr_input_mode != "2":
+            while usr_input_mode != "1" and usr_input_mode != "2":
+                clear()
+
+                print("1. 24h")
+                print("2. 12h")
+
+                usr_input_mode = input("Choose an option : ")
+
+                if usr_input_mode == "1":
+                    display_format_24 = True
+                elif usr_input_mode == "2":
+                    display_format_24 = False
+                else:
+                    error_messages()
+
+        case "5":
+            pause_offset = pause_clock(increment_clock(clock, time.monotonic() - interval - pause_offset), display_format_24, pause_offset)
+            
+        case "0":
             clear()
-
-            print("1. 24h")
-            print("2. 12h")
-
-            usr_input_mode = input("Choose an option : ")
-
-            if usr_input_mode == "1":
-                display_format_24 = True
-            elif usr_input_mode == "2":
-                display_format_24 = False
-            else:
-                error_messages()
+            return False, clock, interval, pause_offset
+        case _:
+            error_messages()
     
-    elif usr_input == "0":
-        clear()
-        return False, clock, interval
-    else:
-        error_messages()
-    
-    return True, clock, interval
+    return True, clock, interval, pause_offset
