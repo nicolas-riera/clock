@@ -1,12 +1,15 @@
 # Librairies
 
 from clear import clear
+from error import error_messages
 from clock import *
+from alarm import *
 import time
 
 # Variables
 
 display_format_24 = True
+alarm = -1, -1, -1
 
 # Functions
 
@@ -36,7 +39,40 @@ def menu(clock, interval):
         interval = time.monotonic()
 
     elif usr_input == "3":
-        pass # à faire
+        clear()
+
+        if check_alarm(clock, alarm):
+
+            if display_format_24:
+                alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02}"
+            else:
+                if alarm[0] >= 13:
+                    alarm_text = f"{int(alarm[0])-12:02}:{int(alarm[1]):02}:{int(alarm[2]):02} PM"
+                else:
+                    alarm_text = f"{int(alarm[0]):02}:{int(alarm[1]):02}:{int(alarm[2]):02} AM"
+
+            clear()
+
+            print("1. Disable Alarm")
+            print("0. Exit")
+            
+            print(f"An alarm is set : {alarm_text}")
+
+            usr_alarm_input = input("Choose an option : ")
+
+            if usr_alarm_input == "1":
+                alarm = -1, -1, -1
+                clear()
+                print("Successfully disabled the alarm.")
+                time.sleep(0.2)
+                input("Press Enter to continue.")
+                
+            elif usr_alarm_input == "0":
+                pass
+            else:
+                error_messages()
+        else:
+            alarm = set_alarm()
 
     elif usr_input == "4":
 
@@ -50,13 +86,17 @@ def menu(clock, interval):
 
             usr_input_mode = input("Choose an option : ")
 
-        if usr_input_mode == "1":
-            display_format_24 = True
-        elif usr_input_mode == "2":
-            display_format_24 = False
+            if usr_input_mode == "1":
+                display_format_24 = True
+            elif usr_input_mode == "2":
+                display_format_24 = False
+            else:
+                error_messages()
     
     elif usr_input == "0":
         clear()
         return False, clock, interval
+    else:
+        error_messages()
     
     return True, clock, interval

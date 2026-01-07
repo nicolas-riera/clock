@@ -1,19 +1,20 @@
 # Librairies
 
 from clear import clear
+from error import error_messages
 import time
 import datetime
 
 # Variables
 
-hour_list = [str(i) for i in range(24)]
-minute_second_list = [str(i) for i in range(60)]
+hour_list = [str(i) for i in range(24)] + [str(i).zfill(2) for i in range(10)]
+minute_second_list = [str(i) for i in range(60)] + [str(i).zfill(2) for i in range(10)]
 
 # Functions
 
 def set_clock()->tuple:
 
-    clear()
+    clear()é
     
     usr_time_hour = input("Enter hours (0-23) : ")
     usr_time_minutes = input("Enter minutes (0-59) : ")
@@ -22,6 +23,7 @@ def set_clock()->tuple:
     if usr_time_hour in hour_list and usr_time_minutes in minute_second_list and usr_time_seconds in minute_second_list:
         return int(usr_time_hour), int(usr_time_minutes), int(usr_time_seconds)
     else:
+        error_messages()
         return set_clock()
 
 def increment_clock(clock, increment):
