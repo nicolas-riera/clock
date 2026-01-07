@@ -13,9 +13,9 @@ running = True
 
 if __name__ == "__main__":
 
-    clock = set_clock()
+    clock, pause_offset = set_clock()
 
     interval = time.monotonic()
 
     while running:
-        running, clock, interval = menu(clock, interval)
+        running, clock, interval, pause_offset = menu(clock, interval, pause_offset)
