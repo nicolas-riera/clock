@@ -30,15 +30,6 @@ def menu(clock, interval, pause_offset):
     print("0. Quit")
 
     usr_input = input("Choose an option : ")
-
-    # Verification to check if the user has a new enough version of Python
-    try: 
-        match usr_input:
-            case _:
-                pass
-    except:
-        print("Your version of Python is too old, please update to Python 3.10+")
-        return False, clock, interval, pause_offset 
     
     match usr_input:
         
