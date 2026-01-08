@@ -7,6 +7,7 @@ This is a Python clock made for Grandma Jeannine, after her naughty cat broke he
 ## Requirements
 
 - Python 3.10+
+- playsound3, can be installed with ```pip install playsound3```
 
 ## Installation
 
