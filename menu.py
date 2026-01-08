@@ -5,6 +5,7 @@ from error import error_messages
 from clock import *
 from alarm import *
 from pause import *
+
 import time
 
 # Variables
