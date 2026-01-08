@@ -3,8 +3,15 @@
 from clear import clear
 from error import error_messages
 from alarm import *
+
 import time
 import datetime
+
+try:
+    from playsound3 import playsound
+except:
+    print("playsound3 is required, please install it : pip install playsound3")
+    exit()
 
 # Variables
 
@@ -65,7 +72,8 @@ def display_clock(clock:tuple, interval, display_format_24, alarm, pause_offset)
 
             if check_alarm((int(f"{int(current_clock[0]):02}"),int(f"{int(current_clock[1]):02}"), int(f"{int(current_clock[2]):02}")), alarm):
                 alarm = -1, -1, -1
-                alarm_ring = 11
+                alarm_ring = 15
+                playsound("alarm.mp3", block=False)
             
             if alarm_ring > 1:
                 alarm_ring -= 1
