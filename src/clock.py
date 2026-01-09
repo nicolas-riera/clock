@@ -1,8 +1,8 @@
 # Librairies
 
-from assets.clear import clear
-from assets.error import error_messages
-from assets.alarm import *
+from src.clear import clear
+from src.error import error_messages
+from src.alarm import *
 
 try :
     import pyfiglet
@@ -84,7 +84,7 @@ def display_clock(clock:tuple, interval, display_format_24, alarm, pause_offset)
             if check_alarm((int(f"{int(current_clock[0]):02}"),int(f"{int(current_clock[1]):02}"), int(f"{int(current_clock[2]):02}")), alarm):
                 alarm = -1, -1, -1
                 alarm_ring = 15
-                playsound("alarm.mp3", block=False)
+                playsound((os.path.join(BASE_DIR, "media", "alarm.mp3")), block=False)
             
             if alarm_ring > 1:
                 alarm_ring -= 1

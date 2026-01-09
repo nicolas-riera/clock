@@ -1,7 +1,7 @@
 # Librairies
 
-from assets.clear import clear
-from assets.error import error_messages
+from src.clear import clear
+from src.error import error_messages
 
 # Variables
 
