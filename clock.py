@@ -4,6 +4,12 @@ from clear import clear
 from error import error_messages
 from alarm import *
 
+try :
+    import pyfiglet
+except:
+    print("pyfiglet is required, please install it : pip install pyfiglet")
+    exit()
+    
 import time
 import datetime
 
@@ -61,14 +67,16 @@ def display_clock(clock:tuple, interval, display_format_24, alarm, pause_offset)
             current_clock = increment_clock(base_clock, elapsed)
 
             if display_format_24:
-                print(f"\033[1;1H{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02}", end="", flush=True)
+                clock_font = pyfiglet.figlet_format(f"{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02}", font = "lcd")
             else:
                 if current_clock[0] >= 13:
-                    print(f"\033[1;1H{int(current_clock[0])-12:02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} PM", end="", flush=True)
+                    clock_font = pyfiglet.figlet_format(f"{int(current_clock[0])-12:02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} PM", font = "lcd")
                 else:
-                    print(f"\033[1;1H{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} AM", end="", flush=True)
+                    clock_font = pyfiglet.figlet_format(f"{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} AM", font = "lcd")
+      
+            print(f"\033[1;1H{clock_font}", end="", flush=True)
 
-            print("\n\n(Press Ctrl + C to open the menu)")
+            print("(Press Ctrl + C to open the menu)")
 
             if check_alarm((int(f"{int(current_clock[0]):02}"),int(f"{int(current_clock[1]):02}"), int(f"{int(current_clock[2]):02}")), alarm):
                 alarm = -1, -1, -1

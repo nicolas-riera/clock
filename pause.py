@@ -4,23 +4,32 @@ from clear import clear
 
 import time
 
+try :
+    import pyfiglet
+except:
+    print("pyfiglet is required, please install it : pip install pyfiglet")
+    exit()
+
 # Functions
 
 def pause_clock(clock, display_format_24, pause_offset):
 
     clear()
 
+    
     if display_format_24:
-        print(f"\033[1;1H{int(clock[0]):02}:{int(clock[1]):02}:{int(clock[2]):02}", end="", flush=True)
+        clock_font = pyfiglet.figlet_format(f"{int(clock[0]):02}:{int(clock[1]):02}:{int(clock[2]):02}", font = "lcd")
     else:
         if clock[0] >= 13:
-            print(f"\033[1;1H{int(clock[0])-12:02}:{int(clock[1]):02}:{int(clock[2]):02} PM", end="", flush=True)
+            clock_font = pyfiglet.figlet_format(f"{int(clock[0])-12:02}:{int(clock[1]):02}:{int(clock[2]):02} PM", font = "lcd")
         else:
-            print(f"\033[1;1H{int(clock[0]):02}:{int(clock[1]):02}:{int(clock[2]):02} AM", end="", flush=True)
+            clock_font = pyfiglet.figlet_format(f"{int(clock[0]):02}:{int(clock[1]):02}:{int(clock[2]):02} AM", font = "lcd")
+      
+    print(f"\033[1;1H{clock_font}", end="", flush=True)
 
     start_monotonic = time.monotonic()
 
-    print("\n\nClock is paused")
+    print("Clock is paused")
     input("Press Enter to unpause clock.")
 
     return pause_offset + (time.monotonic() - start_monotonic)
