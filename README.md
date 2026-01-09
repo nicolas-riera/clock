@@ -7,7 +7,8 @@ This is a Python clock made for Grandma Jeannine, after her naughty cat broke he
 ## Requirements
 
 - Python 3.10+
-- playsound3, can be installed with ```pip install playsound3```
+- playsound3
+- pyfiglet
 
 ## Installation
 
@@ -16,6 +17,16 @@ Clone the repository:
 ```
 git clone https://github.com/nicolas-riera/clock
 ```
+
+Install the dependencies :
+
+```
+cd clock
+```
+```
+pip install -r requirements.txt
+```
+
 
 ## Usage
 
