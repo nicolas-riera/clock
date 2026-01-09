@@ -1,6 +1,6 @@
 # Librairies
 
-from clear import clear
+from assets.clear import clear
 
 import time
 

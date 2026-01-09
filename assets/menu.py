@@ -1,10 +1,10 @@
 # Librairies
 
-from clear import clear
-from error import error_messages
-from clock import *
-from alarm import *
-from pause import *
+from assets.clear import clear
+from assets.error import error_messages
+from assets.clock import *
+from assets.alarm import *
+from assets.pause import *
 
 import time
 

@@ -1,8 +1,8 @@
 # Librairies
 
-from clear import clear
-from error import error_messages
-from alarm import *
+from assets.clear import clear
+from assets.error import error_messages
+from assets.alarm import *
 
 try :
     import pyfiglet
@@ -12,6 +12,7 @@ except:
     
 import time
 import datetime
+import os
 
 try:
     from playsound3 import playsound
@@ -21,9 +22,11 @@ except:
 
 # Variables
 
-hour_list = [str(i) for i in range(24)] + [str(i).zfill(2) for i in range(10)]
-minute_second_list = [str(i) for i in range(60)] + [str(i).zfill(2) for i in range(10)]
+HOUR_LIST = [str(i) for i in range(24)] + [str(i).zfill(2) for i in range(10)]
+MINUTE_SECOND_LIST = [str(i) for i in range(60)] + [str(i).zfill(2) for i in range(10)]
 alarm_ring = 0
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Functions
 
@@ -35,7 +38,7 @@ def set_clock()->tuple:
     usr_time_minutes = input("Enter minutes (0-59) : ")
     usr_time_seconds = input("Enter seconds (0-59) : ")
 
-    if usr_time_hour in hour_list and usr_time_minutes in minute_second_list and usr_time_seconds in minute_second_list:
+    if usr_time_hour in HOUR_LIST and usr_time_minutes in MINUTE_SECOND_LIST and usr_time_seconds in MINUTE_SECOND_LIST:
         return (int(usr_time_hour), int(usr_time_minutes), int(usr_time_seconds)), 0.0
     else:
         error_messages()

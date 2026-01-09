@@ -3,8 +3,8 @@
 import time
 import sys
 
-from clock import *
-from menu import menu
+from assets.clock import *
+from assets.menu import menu
 
 # Variables
 
