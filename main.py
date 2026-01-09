@@ -1,6 +1,7 @@
 # Libairies
 
 import time
+import sys
 
 from clock import *
 from menu import menu
@@ -14,11 +15,7 @@ running = True
 if __name__ == "__main__":
 
     # Verification to check if the user has a new enough version of Python
-    try: 
-        match running:
-            case _:
-                pass
-    except:
+    if sys.version_info < (3, 10):
         print("Your version of Python is too old, please update to Python 3.10+")
         exit()
 
