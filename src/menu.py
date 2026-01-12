@@ -59,23 +59,29 @@ def menu(clock, interval, pause_offset):
                 clear()
 
                 print("1. Disable Alarm")
+                print("2. Edit Alarm")
                 print("0. Exit")
                 
                 print(f"An alarm is set : {alarm_text}")
 
                 usr_alarm_input = input("Choose an option : ")
 
-                if usr_alarm_input == "1":
-                    alarm = -1, -1, -1
-                    clear()
-                    print("Successfully disabled the alarm.")
-                    time.sleep(0.2)
-                    input("Press Enter to continue.")
+                match usr_alarm_input:
+                    case "1":
+                        alarm = -1, -1, -1
+                        clear()
+                        print("Successfully disabled the alarm.")
+                        time.sleep(0.2)
+                        input("Press Enter to continue.")
+
+                    case "2":
+                        alarm = set_alarm()
                     
-                elif usr_alarm_input == "0":
-                    pass
-                else:
-                    error_messages()
+                    case "0":
+                        pass
+
+                    case _:
+                         error_messages()
             else:
                 alarm = set_alarm()
 
