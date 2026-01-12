@@ -105,4 +105,6 @@ def display_clock(clock:tuple, interval, display_format_24, alarm, pause_offset)
         elapsed = now - start_monotonic - pause_offset
         final_clock = increment_clock(base_clock, elapsed)
 
+        alarm_ring = 0
+
         return final_clock, now, alarm
