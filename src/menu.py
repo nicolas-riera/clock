@@ -1,10 +1,10 @@
 # Librairies
 
-from clear import clear
-from error import error_messages
-from clock import *
-from alarm import *
-from pause import *
+from src.clear import clear
+from src.error import error_messages
+from src.clock import *
+from src.alarm import *
+from src.pause import *
 
 import time
 

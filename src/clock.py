@@ -1,11 +1,18 @@
 # Librairies
 
-from clear import clear
-from error import error_messages
-from alarm import *
+from src.clear import clear
+from src.error import error_messages
+from src.alarm import *
 
+try :
+    import pyfiglet
+except:
+    print("pyfiglet is required, please install it : pip install pyfiglet")
+    exit()
+    
 import time
 import datetime
+import os
 
 try:
     from playsound3 import playsound
@@ -15,9 +22,11 @@ except:
 
 # Variables
 
-hour_list = [str(i) for i in range(24)] + [str(i).zfill(2) for i in range(10)]
-minute_second_list = [str(i) for i in range(60)] + [str(i).zfill(2) for i in range(10)]
+HOUR_LIST = [str(i) for i in range(24)] + [str(i).zfill(2) for i in range(10)]
+MINUTE_SECOND_LIST = [str(i) for i in range(60)] + [str(i).zfill(2) for i in range(10)]
 alarm_ring = 0
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Functions
 
@@ -29,7 +38,7 @@ def set_clock()->tuple:
     usr_time_minutes = input("Enter minutes (0-59) : ")
     usr_time_seconds = input("Enter seconds (0-59) : ")
 
-    if usr_time_hour in hour_list and usr_time_minutes in minute_second_list and usr_time_seconds in minute_second_list:
+    if usr_time_hour in HOUR_LIST and usr_time_minutes in MINUTE_SECOND_LIST and usr_time_seconds in MINUTE_SECOND_LIST:
         return (int(usr_time_hour), int(usr_time_minutes), int(usr_time_seconds)), 0.0
     else:
         error_messages()
@@ -61,19 +70,21 @@ def display_clock(clock:tuple, interval, display_format_24, alarm, pause_offset)
             current_clock = increment_clock(base_clock, elapsed)
 
             if display_format_24:
-                print(f"\033[1;1H{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02}", end="", flush=True)
+                clock_font = pyfiglet.figlet_format(f"{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02}", font = "lcd")
             else:
                 if current_clock[0] >= 13:
-                    print(f"\033[1;1H{int(current_clock[0])-12:02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} PM", end="", flush=True)
+                    clock_font = pyfiglet.figlet_format(f"{int(current_clock[0])-12:02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} PM", font = "lcd")
                 else:
-                    print(f"\033[1;1H{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} AM", end="", flush=True)
+                    clock_font = pyfiglet.figlet_format(f"{int(current_clock[0]):02}:{int(current_clock[1]):02}:{int(current_clock[2]):02} AM", font = "lcd")
+      
+            print(f"\033[1;1H{clock_font}", end="", flush=True)
 
-            print("\n\n(Press Ctrl + C to open the menu)")
+            print("(Press Ctrl + C to open the menu)")
 
             if check_alarm((int(f"{int(current_clock[0]):02}"),int(f"{int(current_clock[1]):02}"), int(f"{int(current_clock[2]):02}")), alarm):
                 alarm = -1, -1, -1
                 alarm_ring = 15
-                playsound("alarm.mp3", block=False)
+                playsound((os.path.join(BASE_DIR, "media", "alarm.mp3")), block=False)
             
             if alarm_ring > 1:
                 alarm_ring -= 1

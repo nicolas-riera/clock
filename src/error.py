@@ -1,6 +1,6 @@
 # Librairies
 
-from clear import clear
+from src.clear import clear
 import time
 
 # Functions
