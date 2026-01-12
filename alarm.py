@@ -26,11 +26,4 @@ def set_alarm():
         return set_alarm()
 
 def check_alarm(clock, alarm):
-    count = 3
-    for i in range(3):
-        if clock[i] == alarm[i]:
-            count -= 1
-    if count == 0:
-        return True
-    else:
-        return False
+    return clock == alarm
